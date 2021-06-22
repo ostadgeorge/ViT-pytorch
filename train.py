@@ -178,23 +178,22 @@ def attack_loss(x, model, target_out, target_attn, lambda_out_loss=1.0):
     # print("attn type:")
     # print(type(attn))
 
+    # print("tgt attn type:")
+    # print(type(target_attn))
+    # print("attn type:")
+    # print(type(attn))
+    # print(attn[0].size())
+    # print(target_attn[0].size())
+
+
+    target_attn = torch.stack(target_attn)
+    attn = torch.stack(attn)
+
+
     print("tgt attn type:")
     print(type(target_attn))
     print("attn type:")
     print(type(attn))
-    print(attn[0].size())
-    print(target_attn[0].size())
-
-
-    target_attn = torch.tensor(target_attn)
-    attn = torch.tensor(attn)
-
-    print("tgt attn type:")
-    print(type(target_attn))
-    print("attn type:")
-    print(type(attn))
-    print(attn[0].size())
-    print(target_attn[0].size())
     print("tgt attn size:")
     print(target_attn.size())
     print("attn size:")
