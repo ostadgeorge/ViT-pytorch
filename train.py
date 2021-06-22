@@ -161,18 +161,18 @@ def make_noise(x):
 
 def attack_loss(x, model, target_out, target_attn, lambda_out_loss=1.0):
     out, attn = model(x)
-    print("\n"*5 + "/"*100)
-    print(out.size())
-    print(target_out.size())
+    # print("\n"*5 + "/"*100)
+    # print(out.size())
+    # print(target_out.size())
     target_out = torch.argmax(target_out, 1)
-    print(target_out.size())
+    # print(target_out.size())
 
 
 
     # attn, target_attn
-    print("fucking x type and size:")
-    print(type(x))
-    print(x.size())
+    # print("fucking x type and size:")
+    # print(type(x))
+    # print(x.size())
     # print("tgt attn type:")
     # print(type(target_attn))
     # print("attn type:")
@@ -187,18 +187,20 @@ def attack_loss(x, model, target_out, target_attn, lambda_out_loss=1.0):
 
 
     target_attn = torch.stack(target_attn)
+    target_attn.transpose(0, 1)
+
     attn = torch.stack(attn)
+    attn.transpose(0, 1)
 
-
-    print("tgt attn type:")
-    print(type(target_attn))
-    print("attn type:")
-    print(type(attn))
-    print("tgt attn size:")
-    print(target_attn.size())
-    print("attn size:")
-    print(attn.size())
-    print("/"*100 + "\n"*5)
+    # print("tgt attn type:")
+    # print(type(target_attn))
+    # print("attn type:")
+    # print(type(attn))
+    # print("tgt attn size:")
+    # print(target_attn.size())
+    # print("attn size:")
+    # print(attn.size())
+    # print("/"*100 + "\n"*5)
     loss = lambda_out_loss * torch.nn.functional.cross_entropy(out, target_out) + torch.nn.functional.mse_loss(attn, target_attn)
     return loss
 
