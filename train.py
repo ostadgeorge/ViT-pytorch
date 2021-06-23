@@ -204,6 +204,7 @@ def attack_loss(x, model, target_out, target_attn, lambda_out_loss=1.0):
     loss = lambda_out_loss * torch.nn.functional.cross_entropy(out, target_out) + torch.nn.functional.mse_loss(attn, target_attn)
     return loss
 
+cnt = 1
 
 def fgsm_attack(x, model, eps=1e-3, n_iter=50):
     new_x: torch.Tensor = x.detach().clone()
@@ -214,6 +215,11 @@ def fgsm_attack(x, model, eps=1e-3, n_iter=50):
     target_out, target_attn = model(x)
     for i in range(n_iter):
         model.zero_grad()
+        print("#" * 20)
+        print(cnt)
+        cnt += 1
+        print(new_x.grad)
+        print("#" * 20)
         new_x.grad.data.zero_()
         grad = compute_input_gradient(attack_loss, new_x, model=model, target_out=target_out, target_attn=target_attn)
         new_x = torch.clamp(new_x + eps * grad.sign(), 0, 1)
