@@ -209,14 +209,15 @@ cnt = 1
 def fgsm_attack(x, model, eps=1e-3, n_iter=50):
     global cnt
     new_x: torch.Tensor = x.detach().clone()
-    new_x.requires_grad_()
-    ### shit work
-    shit = 2 * new_x
-    shit.sum().backward()
-    ###
+
     target_out, target_attn = model(x)
     for i in range(n_iter):
         model.zero_grad()
+        new_x.requires_grad_()
+        ### shit work
+        shit = 2 * new_x
+        shit.sum().backward()
+        ###
         # print("#" * 20)
         # print(cnt)
         # cnt += 1
