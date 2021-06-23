@@ -6,5 +6,5 @@ b = torch.tensor([1, 2])
 c = torch.tensor([1, 2])
 
 a.requires_grad_()
-a = a * a 
-a
+
+y = a * a + 2 * a

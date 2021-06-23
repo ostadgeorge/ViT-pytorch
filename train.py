@@ -210,17 +210,18 @@ def fgsm_attack(x, model, eps=1e-3, n_iter=50):
     global cnt
     new_x: torch.Tensor = x.detach().clone()
     new_x.requires_grad_()
-    #### dummy work :/
-    new_x = new_x * new_x
-    ####
+    ### shit work
+    shit = 2 * new_x
+    shit.backward()
+    ###
     target_out, target_attn = model(x)
     for i in range(n_iter):
         model.zero_grad()
-        print("#" * 20)
-        print(cnt)
-        cnt += 1
-        print(new_x.grad)
-        print("#" * 20)
+        # print("#" * 20)
+        # print(cnt)
+        # cnt += 1
+        # print(new_x.grad)
+        # print("#" * 20)
         new_x.grad.data.zero_()
         grad = compute_input_gradient(attack_loss, new_x, model=model, target_out=target_out, target_attn=target_attn)
         new_x = torch.clamp(new_x + eps * grad.sign(), 0, 1)
