@@ -208,6 +208,9 @@ def attack_loss(x, model, target_out, target_attn, lambda_out_loss=1.0):
 def fgsm_attack(x, model, eps=1e-3, n_iter=50):
     new_x: torch.Tensor = x.detach().clone()
     new_x.requires_grad_()
+    #### dummy work :/
+    new_x = new_x * new_x
+    ####
     target_out, target_attn = model(x)
     for i in range(n_iter):
         model.zero_grad()
